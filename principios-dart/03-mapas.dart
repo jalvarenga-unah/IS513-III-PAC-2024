@@ -3,6 +3,7 @@ void main() {
 
   final Map<String, dynamic> persona = {
     'nombre': 'Juan',
+    // 'nombre': 'Pedro',
     'edad': 20,
     'soltero': true,
     'hijos': ['Pedro', 'Pablo', 'Maria'],
@@ -14,7 +15,14 @@ void main() {
   };
 
   persona['nombre'] = 'Pedro';
+  // si la clave no existe, se crea
   persona['apellido'] = 'Perez'; //agregar un nuevo valor
+
+  //eliminar una clave del mapa
+  persona.remove('soltero');
+  persona['direccion'].remove('numero');
+  persona['direccion']['geo'].remove('lng');
+
   print(persona);
   print(persona['nombre']);
   print(persona['Edad']);
