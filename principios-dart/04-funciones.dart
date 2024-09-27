@@ -32,10 +32,17 @@ void saludo({required String nombre, required String apellido}) {
 //? Para que el argumento sea posicional y opcional se debe de poner entre corchetes
 //? y se debe de poner un valor por defecto o permitir que sea nulo
 Map<String, String> transformar(String nombre, int edad, {bool? esMayor}) {
+  // IMPORTANTE: En el ejemplo de clase, cometí un error, no se puede asignar un valor "String"
+  // a una variable de tipo "bool", por lo que se debe de hacer una validación para que el valor
+  // sea nulo o no, y así poder asignar el valor correcto a la variable "temp" y dejar que Dart
+  // infiera el tipo de dato correcto.
+  final temp = esMayor != null && esMayor ? 'Si' : null;
+
+// Es necesario que el ternario esté entre paréntesis, para que Dart infiera el tipo de dato correcto.
   return {
     'nombre': nombre,
     // 'edad': edad.toString(),
     'edad': '$edad',
-    'esMayor': esMayor ? 'Si' : 'No',
+    'esMayor': temp ?? (edad > 18 ? 'Si' : 'No')
   };
 }
