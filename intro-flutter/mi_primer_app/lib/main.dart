@@ -27,8 +27,28 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        body: Center(
-          child: Text('Hola mundo'),
+        body: Container(
+          // width: double.infinity,
+          color: Colors.red,
+          child: const Column(
+            // mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(child: Text('Hola Mundo')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Item 1'),
+                  Text('Item 2'),
+                ],
+              ),
+              Text(
+                'Hola Mundo',
+                style: TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
