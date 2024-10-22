@@ -7,11 +7,25 @@ void main() {
 // Widgets sin estado: StatelessWidget
 // Widgets con estado: StatefullWidget
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   double size = 24.0;
+
+  int contador = 0;
 
   @override
   Widget build(BuildContext context) {
+    print('Cambió el estado');
+    final estilo = TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.w200,
+      color: Colors.blueGrey,
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -27,33 +41,35 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        body: Container(
-          // width: double.infinity,
-          color: Colors.red,
-          child: const Column(
-            // mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(child: Text('Hola Mundo')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Item 1'),
-                  Text('Item 2'),
-                ],
-              ),
-              Text(
+        body: Column(
+          // mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Text(
                 'Hola Mundo',
-                style: TextStyle(fontSize: 14),
+                style: estilo.copyWith(
+                  fontSize: size,
+                ),
               ),
-            ],
-          ),
+            ),
+            Center(
+              child: Text(
+                '$contador',
+                style: estilo.copyWith(
+                  fontSize: 40,
+                ),
+              ),
+            )
+          ],
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
-            print('Hizo clic');
+            contador++;
+            size++;
+            setState(() {});
           },
         ),
       ),
