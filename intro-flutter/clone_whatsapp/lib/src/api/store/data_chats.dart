@@ -1,4 +1,4 @@
-const chats = [
+const List<Map<String, String>> chats = [
   {
     'sender': 'Juan Alvarenga',
     'message': 'olii',
