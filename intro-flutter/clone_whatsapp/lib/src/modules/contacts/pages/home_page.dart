@@ -1,10 +1,14 @@
+import 'package:clone_whatsapp/src/modules/contacts/pages/fragments/chats_fragments.dart';
+import 'package:clone_whatsapp/src/modules/contacts/pages/fragments/comunidades_fragment.dart';
+import 'package:clone_whatsapp/src/modules/contacts/pages/fragments/estados_fragment.dart';
+import 'package:clone_whatsapp/src/modules/contacts/pages/fragments/llamadas_fragment.dart';
 import 'package:clone_whatsapp/src/modules/contacts/widgets/bottom_menu.dart';
-import 'package:clone_whatsapp/src/modules/contacts/widgets/item_chat.dart';
 import 'package:flutter/material.dart';
-import 'package:clone_whatsapp/src/api/store/data_chats.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final pageViewController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +39,17 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: PageView(
+        controller: pageViewController,
+        //⬇️ cancela el swipe de las paginas
+        physics: const NeverScrollableScrollPhysics(),
         children: const [
-          chat_fragment(),
-          estados_fragment(),
-          llamadas_fragment()
+          ChatFragment(),
+          EstadosFragment(),
+          ComunidadesFragmnet(),
+          LlamadasFragment()
         ],
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Colors.teal[600],
@@ -49,53 +58,14 @@ class HomePage extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      bottomNavigationBar: BottomMenu(),
-    );
-  }
-}
+      bottomNavigationBar: BottomMenu(
+        //callback para cambiar de pagina
+        changePage: (index) {
+          // pageViewController.animateToPage(index,
+          //     duration: const Duration(milliseconds: 300),
+          //     curve: Curves.easeIn);
 
-class llamadas_fragment extends StatelessWidget {
-  const llamadas_fragment({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-    );
-  }
-}
-
-class estados_fragment extends StatelessWidget {
-  const estados_fragment({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-    );
-  }
-}
-
-class chat_fragment extends StatelessWidget {
-  const chat_fragment({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ListView.builder(
-        itemCount: chats.length,
-        itemBuilder: (BuildContext context, int indice) {
-          return Itemchat(
-            sender: chats[indice]['sender']!,
-            message: chats[indice]['message']!,
-            time: chats[indice]['time']!,
-          );
+          pageViewController.jumpToPage(index);
         },
       ),
     );

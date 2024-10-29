@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomMenu extends StatefulWidget {
-  const BottomMenu({
-    super.key,
-  });
+  const BottomMenu({super.key, required this.changePage});
+
+  final void Function(int) changePage;
 
   @override
   State<BottomMenu> createState() => _BottomMenuState();
@@ -20,6 +20,8 @@ class _BottomMenuState extends State<BottomMenu> {
       currentIndex: currentIndex,
       onTap: (index) {
         currentIndex = index;
+        // pageViewController = index;
+        widget.changePage(currentIndex); // se ejecuta la función
         setState(() {});
       },
       selectedItemColor: Colors.teal[600],
