@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
 
 class BottomMenu extends StatefulWidget {
-  const BottomMenu({super.key, required this.changePage});
+  BottomMenu({
+    super.key,
+    required this.changePage,
+    required this.currentIndex,
+  });
 
   final void Function(int) changePage;
+  int currentIndex;
 
   @override
   State<BottomMenu> createState() => _BottomMenuState();
 }
 
 class _BottomMenuState extends State<BottomMenu> {
-  int currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType
           .fixed, // Propiedad para que se muestren todos los iconos cuando son mas de 3
-      currentIndex: currentIndex,
+      currentIndex: widget.currentIndex,
       onTap: (index) {
-        currentIndex = index;
+        widget.currentIndex = index;
         // pageViewController = index;
-        widget.changePage(currentIndex); // se ejecuta la función
+        widget.changePage(widget.currentIndex); // se ejecuta la función
         setState(() {});
       },
       selectedItemColor: Colors.teal[600],

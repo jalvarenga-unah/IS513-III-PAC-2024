@@ -5,10 +5,17 @@ import 'package:clone_whatsapp/src/modules/contacts/pages/fragments/llamadas_fra
 import 'package:clone_whatsapp/src/modules/contacts/widgets/bottom_menu.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  final pageViewController = PageController(initialPage: 0);
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final pageViewController = PageController();
+
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +48,18 @@ class HomePage extends StatelessWidget {
       body: PageView(
         controller: pageViewController,
         //⬇️ cancela el swipe de las paginas
-        physics: const NeverScrollableScrollPhysics(),
+        // physics: const NeverScrollableScrollPhysics(),
         children: const [
           ChatFragment(),
           EstadosFragment(),
           ComunidadesFragmnet(),
           LlamadasFragment()
         ],
+        onPageChanged: (page) {
+          currentPage = page;
+          //tiene efecto en todo el arbol de widgets
+          setState(() {});
+        },
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
@@ -59,6 +71,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomMenu(
+        currentIndex: currentPage,
         //callback para cambiar de pagina
         changePage: (index) {
           // pageViewController.animateToPage(index,
