@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomMenu(
-        currentIndex: currentPage,
+        currentPage: currentPage,
         //callback para cambiar de pagina
         changePage: (index) {
           // pageViewController.animateToPage(index,
