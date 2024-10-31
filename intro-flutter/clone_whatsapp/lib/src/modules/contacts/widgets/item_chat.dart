@@ -1,3 +1,4 @@
+import 'package:clone_whatsapp/src/modules/contacts/pages/chat_page.dart';
 import 'package:flutter/material.dart';
 
 class Itemchat extends StatelessWidget {
@@ -18,6 +19,7 @@ class Itemchat extends StatelessWidget {
       title: Text(sender),
       subtitle: Text(message),
       leading: CircleAvatar(
+          backgroundColor: Colors.teal[100],
           child: Text(sender[0])), //TODO: agregar una imagen si la tiene
       trailing: Column(
         children: [
@@ -31,6 +33,19 @@ class Itemchat extends StatelessWidget {
           ),
         ],
       ),
+      onTap: () {
+        //? Ejemplos de como hacer navegación
+        // Navigator.of(context).pushNamed('/chat');
+        // Navigator.of(context).pushNamed('/home');
+        // Navigator.of(context).pushReplacementNamed('/home');
+        // Navigator.of(context).popAndPushNamed(
+        //   '/home',
+        // );
+        // Navigator.of(context)
+        //     .push(MaterialPageRoute(builder: (context) => ChatPage()));
+
+        Navigator.pushNamed(context, '/chat');
+      },
     );
   }
 }
