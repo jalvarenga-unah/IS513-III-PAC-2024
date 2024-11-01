@@ -1,4 +1,4 @@
-import 'package:clone_whatsapp/src/modules/contacts/pages/chat_page.dart';
+import 'package:clone_whatsapp/src/modules/contacts/models/chat_arguments.dart';
 import 'package:flutter/material.dart';
 
 class Itemchat extends StatelessWidget {
@@ -7,11 +7,13 @@ class Itemchat extends StatelessWidget {
     required this.sender,
     required this.message,
     required this.time,
+    required this.id,
   });
 
   final String sender;
   final String message;
   final String time;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,8 @@ class Itemchat extends StatelessWidget {
         // Navigator.of(context)
         //     .push(MaterialPageRoute(builder: (context) => ChatPage()));
 
-        Navigator.pushNamed(context, '/chat');
+        Navigator.pushNamed(context, '/chat',
+            arguments: ChatArguments(chatId: id, userName: sender));
       },
     );
   }

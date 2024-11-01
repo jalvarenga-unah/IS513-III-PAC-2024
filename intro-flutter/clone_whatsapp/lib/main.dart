@@ -14,14 +14,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Clone Whatsapp',
       // home: const HomePage(),
-      initialRoute: '/home',
+      // initialRoute: '/home',
       routes: {
-        '/home': (context) => const HomePage(),
+        '/': (context) => const HomePage(),
         '/chat': (context) => const ChatPage(),
       },
+      //TODO: Revisar que ocurre con esto!!!!!
       onGenerateRoute: (settings) => MaterialPageRoute(
         builder: (context) {
-          print(settings.name);
+          // if (settings.name == '/') return HomePage();
 
           return const PageNotFound();
         },

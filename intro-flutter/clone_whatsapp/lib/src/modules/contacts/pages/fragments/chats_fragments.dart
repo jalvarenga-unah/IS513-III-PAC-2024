@@ -16,6 +16,7 @@ class ChatFragment extends StatelessWidget {
         itemBuilder: (BuildContext context, int indice) {
           return Itemchat(
             sender: chats[indice]['sender']!,
+            id: chats[indice]['id']!,
             message: chats[indice]['message']!,
             time: chats[indice]['time']!,
           );
