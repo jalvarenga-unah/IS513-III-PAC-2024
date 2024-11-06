@@ -1,3 +1,4 @@
+import 'package:clone_whatsapp/src/modules/auth/pages/login_page.dart';
 import 'package:clone_whatsapp/src/modules/contacts/pages/chat_page.dart';
 import 'package:clone_whatsapp/src/modules/contacts/pages/home_page.dart';
 import 'package:clone_whatsapp/src/shared/pages/page_not_found.dart';
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Clone Whatsapp',
       // home: const HomePage(),
-      // initialRoute: '/home',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const HomePage(),
         '/chat': (context) => const ChatPage(),
+        '/login': (context) => LoginPage()
       },
       //TODO: Revisar que ocurre con esto!!!!!
       onGenerateRoute: (settings) => MaterialPageRoute(
