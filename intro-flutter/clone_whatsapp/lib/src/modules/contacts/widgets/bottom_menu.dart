@@ -20,10 +20,12 @@ class _BottomMenuState extends State<BottomMenu> {
     // se ejecuta antes del metodo build
     super.initState(); // NO se debe borrar
     currentIndex = widget.currentPage;
+    print('InitState');
   }
 
   @override
   Widget build(BuildContext context) {
+    print('Build');
     return BottomNavigationBar(
       type: BottomNavigationBarType
           .fixed, // Propiedad para que se muestren todos los iconos cuando son mas de 3

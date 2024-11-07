@@ -1,5 +1,6 @@
 import 'package:clone_whatsapp/src/modules/contacts/models/chat_arguments.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Itemchat extends StatelessWidget {
   const Itemchat({
@@ -46,8 +47,9 @@ class Itemchat extends StatelessWidget {
         // Navigator.of(context)
         //     .push(MaterialPageRoute(builder: (context) => ChatPage()));
 
-        Navigator.pushNamed(context, '/chat',
-            arguments: ChatArguments(chatId: id, userName: sender));
+        context.go('/chat', extra: ChatArguments(chatId: id, userName: sender));
+        // Navigator.pushNamed(context, '/chat',
+        //     arguments: ChatArguments(chatId: id, userName: sender));
       },
     );
   }

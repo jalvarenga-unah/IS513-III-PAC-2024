@@ -6,15 +6,16 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final argumentos =
-        ModalRoute.of(context)!.settings.arguments as ChatArguments;
+    //TODO: manejar los argumentos y mostrarlos en la pantalla
+    // final argumentos =
+    //     ModalRoute.of(context)!.settings.arguments as ChatArguments;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text(argumentos.userName),
+        title: Text('argumentos.userName'),
       ),
-      body: Center(child: Text('Id ${argumentos.chatId}')),
+      body: Center(child: Text('Id ')),
     );
   }
 }

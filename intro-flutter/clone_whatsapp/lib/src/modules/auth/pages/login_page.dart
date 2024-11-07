@@ -31,6 +31,7 @@ class LoginPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
           onPressed: () {
+            Navigator.of(context).pushNamed('/');
             print(userController.text);
           }),
     );
