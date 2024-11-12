@@ -1,27 +1,29 @@
 import 'package:clone_whatsapp/src/modules/auth/pages/login_page.dart';
 import 'package:clone_whatsapp/src/modules/contacts/pages/chat_page.dart';
 import 'package:clone_whatsapp/src/modules/contacts/pages/home_page.dart';
-import 'package:clone_whatsapp/src/shared/pages/page_not_found.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 void main() => runApp(const MyApp());
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/login',
   routes: <RouteBase>[
     GoRoute(
-      path: '/home',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
-    ),
-    GoRoute(
-      path: '/chat',
-      builder: (BuildContext context, GoRouterState state) {
-        return const ChatPage();
-      },
-    ),
+        path: '/',
+        name: 'home',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomePage();
+        },
+        routes: [
+          GoRoute(
+            path: '/chat/:chatId',
+            name: 'chat',
+            builder: (BuildContext context, GoRouterState state) {
+              return const ChatPage();
+            },
+          ),
+        ]),
     GoRoute(
       path: '/login',
       builder: (BuildContext context, GoRouterState state) {
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
       //TODO: Revisar que ocurre con esto!!!!!
       // onGenerateRoute: (settings) => MaterialPageRoute(
       //   builder: (context) {
-      //     // if (settings.name == '/') return HomePage();
+      //     if (settings.name == '/') return HomePage();
 
       //     return const PageNotFound();
       //   },

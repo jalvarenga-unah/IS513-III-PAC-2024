@@ -47,7 +47,13 @@ class Itemchat extends StatelessWidget {
         // Navigator.of(context)
         //     .push(MaterialPageRoute(builder: (context) => ChatPage()));
 
-        context.go('/chat', extra: ChatArguments(chatId: id, userName: sender));
+        // context.go('/home/chat',
+        //     extra: ChatArguments(chatId: id, userName: sender));
+
+        context.goNamed('chat', pathParameters: {
+          'chatId': id.toString(),
+        }); // -> /chat
+
         // Navigator.pushNamed(context, '/chat',
         //     arguments: ChatArguments(chatId: id, userName: sender));
       },
