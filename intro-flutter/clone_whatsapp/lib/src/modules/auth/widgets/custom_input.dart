@@ -18,16 +18,18 @@ class CustomInput extends StatelessWidget {
       controller: userController,
       keyboardType: keyboardType,
       obscureText: keyboardType == TextInputType.visiblePassword,
+      // style: TextStyle(color: Colors.teal),
       decoration: InputDecoration(
           hintText: 'Ingrese su $title',
+          // labelStyle: TextStyle(color: Colors.red),
           label: Text(title),
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(1000),
             ),
           ),
-          prefixIcon: Icon(Icons.person),
-          suffixIcon: Icon(Icons.remove_red_eye)
+          prefixIcon: const Icon(Icons.person),
+          suffixIcon: const Icon(Icons.remove_red_eye)
           // counter: Text('olii'),
           ),
       maxLength: 15,
