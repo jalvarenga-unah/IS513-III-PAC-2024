@@ -8,13 +8,44 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    productosProvider.getProductsAsync();
+    // final productos = productosProvider.getProductsAsync();
+    // print(productos);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Material App Bar'),
       ),
-      body: const Center(
-        child: Text('Hello World'),
+      body: FutureBuilder(
+        future: productosProvider.getProductsAsync(),
+        builder: (contex, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error al obtener los productos'),
+            );
+          }
+
+          if (!snapshot.hasData) {
+            return const Center(
+              child: Text('No hay productos'),
+            );
+          }
+
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final producto = snapshot.data![index];
+
+                return ListTile(
+                  title: Text(producto['title']),
+                  subtitle: Text(producto['description']),
+                );
+              });
+        },
       ),
     );
   }
