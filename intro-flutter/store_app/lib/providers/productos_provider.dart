@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:store_app/models/producto.dart';
 
 class ProductosProvider {
   getProducts() {
@@ -19,7 +20,7 @@ class ProductosProvider {
     print('Hacer otras cosas');
   }
 
-  Future<List<Map<dynamic, dynamic>>> getProductsAsync() async {
+  Future<List<Producto>> getProductsAsync() async {
     // final Uri url = Uri.https('fakestoreapi.com', '/products');
     final Uri url = Uri.parse('https://fakestoreapi.com/products');
 
@@ -29,9 +30,13 @@ class ProductosProvider {
       if (response.statusCode != 200) {
         throw Exception("Error al obtener los productos");
       }
-
+      // List<dynamic>
       // final data = json.decode(response.body).cast<Map<dynamic, dynamic>>();
-      final data = List<Map>.from(json.decode(response.body));
+      final data = List<Producto>.from(
+        json.decode(response.body).map((prod) => Producto.fromJson(prod)),
+      );
+
+      print(data);
 
       return data;
     } catch (error) {
