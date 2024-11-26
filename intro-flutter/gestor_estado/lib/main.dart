@@ -48,6 +48,28 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex: controller.currentIndex.value,
+          onTap: (value) {
+            controller.currentIndex.value = value;
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: 'Business',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'School',
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
