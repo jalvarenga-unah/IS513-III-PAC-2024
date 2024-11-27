@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:gestor_estado/controllers/contador_controller.dart';
 import 'package:get/get.dart';
@@ -9,8 +8,6 @@ class DetallePage extends StatelessWidget {
   // final ContadorController controller = ContadorController();
   final controller = Get.find<ContadorController>();
   // final controller = Get.put<ContadorController>(ContadorController());
-
-  late AnimationController animateController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +25,36 @@ class DetallePage extends StatelessWidget {
       body: Obx(() => ListView.builder(
             itemCount: controller.numeros.length,
             itemBuilder: (context, index) {
-              return FadeOutLeft(
-                manualTrigger: true,
-                controller: (controller) => animateController = controller,
+              return Dismissible(
+                key: ValueKey(controller.numeros[index].toString()),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
+                  child: const Icon(Icons.delete),
+                ),
+                // confirmDismiss: (direction) {
+                //   if (direction == DismissDirection.endToStart) {
+                //     return Future.value(true);
+                //   }
+                //   return Future.value(false);
+                // },
+                secondaryBackground: Container(
+                  color: Colors.green,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  child: const Icon(Icons.edit),
+                ),
+                onDismissed: (direction) {
+                  //TODO: alerta para confirmar la eliminación
+                  if (direction == DismissDirection.startToEnd) {
+                    controller.deleteNumber(index);
+                  }
+                },
                 child: ListTile(
                   title: Text('Número: ${controller.numeros[index]}'),
                   onLongPress: () {
-                    animateController.forward();
-                    // controller.deleteNumber(index);
+                    controller.deleteNumber(index);
                   },
                 ),
               );

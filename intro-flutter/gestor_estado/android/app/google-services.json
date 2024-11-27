@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "332772322031",
+    "project_id": "unah-3pac2k24-lp",
+    "storage_bucket": "unah-3pac2k24-lp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332772322031:android:2d38c1747a952d027d491a",
+        "android_client_info": {
+          "package_name": "hn.edu.unah.gestor_estado"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDia2ODw4aqY9jZ1hIhnHZLAXc6PrgktNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
