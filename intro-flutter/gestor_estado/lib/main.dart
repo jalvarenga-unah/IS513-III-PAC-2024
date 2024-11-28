@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gestor_estado/controllers/contador_controller.dart';
 import 'package:gestor_estado/detalle_page.dart';
@@ -11,6 +12,18 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
   runApp(const MyApp());
 }
 
@@ -19,6 +32,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('Token: $token');
+    });
+
+    //habilitar un contrato de escucha
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        //TODO: generar una notificación local
+        //mostrar un snackbar, AlertDialog, etc
+
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(message.notification?.title ?? 'Sin título'),
+        //     duration: const Duration(seconds: 2),
+        //   ),
+        // );
+
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
     return MaterialApp(
       title: 'Material App',
       initialRoute: '/',
