@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gestor_estado/admin_album.dart';
 import 'package:gestor_estado/controllers/contador_controller.dart';
 import 'package:gestor_estado/models/album.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class DetallePage extends StatelessWidget {
   DetallePage({super.key});
@@ -10,12 +12,11 @@ class DetallePage extends StatelessWidget {
   // final ContadorController controller = ContadorController();
   final controller = Get.find<ContadorController>();
   // final controller = Get.put<ContadorController>(ContadorController());
+  final CollectionReference ref =
+      FirebaseFirestore.instance.collection('albumes');
 
   @override
   Widget build(BuildContext context) {
-    final CollectionReference ref =
-        FirebaseFirestore.instance.collection('albumes');
-
     //     final ref = FirebaseFirestore.instance.collection('albumes').withConverter<Album>(
     //   fromFirestore: (snapshot, _) => Album.fromJson(snapshot.data()!),
     //   toFirestore: (movie, _) => movie.toJson(),
@@ -29,14 +30,8 @@ class DetallePage extends StatelessWidget {
         onPressed: () {
           // controller.addNum(controller.numeros.length + 1);
           // print(controller.numeros);
-
-          final nuevoAlbum = Album(
-            nombreBanda: 'Iron Maiden',
-            nombreAlbum: 'The Number of the Beast',
-            anio: 1982,
-          );
-
-          ref.add(nuevoAlbum.toJson());
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AdminAlbum()));
         },
         child: const Icon(Icons.add),
       ),
@@ -60,7 +55,9 @@ class DetallePage extends StatelessWidget {
           }
 
           final listaAlbumes = snapshot.data!.docs.map((itemAlbum) {
-            return Album.fromJson(itemAlbum.data() as Map<String, dynamic>);
+            final temp = itemAlbum.data() as Map<String, dynamic>;
+            temp['id'] = itemAlbum.id;
+            return Album.fromJson(temp);
           }).toList();
 
           return ListView.builder(
@@ -68,10 +65,73 @@ class DetallePage extends StatelessWidget {
             itemBuilder: (context, index) {
               final album = listaAlbumes[index];
 
-              return ListTile(
-                title: Text('Banda: ${album.nombreBanda}'),
-                subtitle: Text('Album: ${album.nombreAlbum}'),
-                trailing: Text('Año: ${album.anio}'),
+              return Dismissible(
+                key: ValueKey(album.id),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.red[100],
+                  ),
+                ),
+                secondaryBackground: Container(
+                  color: Colors.green,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.green[100],
+                  ),
+                ),
+                confirmDismiss: (direction) async {
+                  if (direction == DismissDirection.endToStart) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AdminAlbum(),
+                        settings: RouteSettings(arguments: album.id)));
+
+                    return Future.value(false);
+                  }
+
+                  return await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirmación"),
+                        content: Text(
+                            "Seguro que quiere eliminar ${album.nombreAlbum}?"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text(
+                                "Eliminar",
+                                style: TextStyle(color: Colors.red),
+                              )),
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: const Text("Cancelar"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                onDismissed: (direction) {
+                  if (direction == DismissDirection.endToStart) {
+                    //navegar a la pantalla de edición
+                    print('editar');
+                  } else {
+                    //eliminar el documento
+                    // final docRef = ref.doc(  snapshot.data!.docs[index].id    );
+                    ref.doc(album.id).delete();
+                  }
+                },
+                child: ListTile(
+                  title: Text('Banda: ${album.nombreBanda}'),
+                  subtitle: Text('Album: ${album.nombreAlbum}'),
+                  trailing: Text('Año: ${album.anio}'),
+                ),
               );
             },
           );
@@ -80,7 +140,6 @@ class DetallePage extends StatelessWidget {
     );
   }
 }
-
 
 /*
 Obx(() => ListView.builder(

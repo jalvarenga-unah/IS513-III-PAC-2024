@@ -2,11 +2,13 @@ class Album {
   final String nombreBanda;
   final String nombreAlbum;
   final int anio;
+  final String? id;
 
   Album({
     required this.nombreBanda,
     required this.nombreAlbum,
     required this.anio,
+    this.id,
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,7 @@ class Album {
       nombreBanda: json['nombre_banda'],
       nombreAlbum: json['nombre_album'],
       anio: json['anio'],
+      id: json['id'],
     );
   }
 
